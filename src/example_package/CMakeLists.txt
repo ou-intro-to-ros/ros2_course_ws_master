@@ -21,15 +21,20 @@ ament_export_dependencies(rosidl_default_runtime)
 add_executable(topic_publisher src/topic_publisher.cpp)
 target_link_libraries(topic_publisher PUBLIC rclcpp::rclcpp ${std_msgs_TARGETS})
 
+add_executable(namespaces src/namespaces.cpp)
+target_link_libraries(namespaces PUBLIC rclcpp::rclcpp ${std_msgs_TARGETS})
+
 add_executable(turtle_timer src/turtle_timer.cpp)
 target_link_libraries(turtle_timer PUBLIC rclcpp::rclcpp ${turtlesim_TARGETS} ${geometry_msgs_TARGETS})
 
 add_executable(turtle_subpub src/turtle_subpub.cpp)
 target_link_libraries(turtle_subpub PUBLIC rclcpp::rclcpp ${turtlesim_TARGETS} ${geometry_msgs_TARGETS})
 
-add_executable(turtle_sub src/turtle_sub.cpp)
-target_link_libraries(turtle_sub PUBLIC rclcpp::rclcpp ${turtlesim_TARGETS} ${geometry_msgs_TARGETS})
+add_executable(turtle_speed src/turtle_speed.cpp)
+target_link_libraries(turtle_speed PUBLIC rclcpp::rclcpp ${turtlesim_TARGETS} ${std_msgs_TARGETS} ${geometry_msgs_TARGETS})
 
+add_executable(turtle_distance src/turtle_distance.cpp)
+target_link_libraries(turtle_distance PUBLIC rclcpp::rclcpp ${turtlesim_TARGETS} ${std_msgs_TARGETS} ${geometry_msgs_TARGETS})
 
 add_executable(service_advertiser src/service_advertiser.cpp)
 target_link_libraries(service_advertiser PUBLIC rclcpp::rclcpp ${example_package_TARGETS} "${cpp_typesupport_target}")
@@ -37,6 +42,8 @@ target_link_libraries(service_advertiser PUBLIC rclcpp::rclcpp ${example_package
 add_executable(service_client src/service_client.cpp)
 target_link_libraries(service_client PUBLIC rclcpp::rclcpp ${example_package_TARGETS} "${cpp_typesupport_target}")
 
-install(TARGETS topic_publisher turtle_timer turtle_subpub turtle_sub service_advertiser service_client DESTINATION lib/${PROJECT_NAME})
+install(TARGETS topic_publisher namespaces turtle_timer turtle_subpub turtle_speed turtle_distance service_advertiser service_client DESTINATION lib/${PROJECT_NAME})
+
+install(DIRECTORY launch DESTINATION share/${PROJECT_NAME}/)
 
 ament_package()
