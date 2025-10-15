@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+    <!-- Use simulation time -->
+    <arg name="use_sim_time" default="true" />
+    
+    <!-- Locate the package share directory -->
+    <let name="pkg_share" value="$(find-pkg-share my_robot_description)" />
+    
+    <!-- Construct full path to the xacro file -->
+    <let name="xacro_file" value="$(var pkg_share)/urdf/camera_arm_robot.urdf.xacro" />
+    
+    <!-- Process the xacro file into URDF -->
+    <let name="robot_description" value="$(command 'xacro $(var xacro_file)')" />
+        
+    <!-- Robot State Publisher -->
+    <node pkg="robot_state_publisher" exec="robot_state_publisher" output="screen">
+        <param name="robot_description" type="str" value="$(var robot_description)" />
+        <param name="use_sim_time" value="$(var use_sim_time)" />
+    </node>
+    
+    <!-- Launch Gazebo with ROS factory plugin -->
+    <executable cmd="gzserver --verbose -s libgazebo_ros_init.so -s libgazebo_ros_factory.so" output="screen" />
+    <executable cmd="gzclient" output="screen" />
+    
+    <!-- Spawn the robot entity in Gazebo with delay -->
+    <node pkg="gazebo_ros" exec="spawn_entity.py" output="screen"
+          args="-topic robot_description -entity camera_arm_robot"
+          launch-prefix="bash -c 'sleep 5; $0 $@' ">
+        <param name="use_sim_time" value="$(var use_sim_time)" />
+    </node>
+    
+    <!-- RViz -->
+    <node pkg="rviz2" exec="rviz2" name="rviz2" output="screen">
+        <param name="use_sim_time" value="$(var use_sim_time)" />
+    </node>
+</launch>
