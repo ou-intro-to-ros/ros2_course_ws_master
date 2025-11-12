@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<sdf version="1.6">
+  <model name="aruco_board">
+    <static>true</static>
+    <link name="link"> 
+      <visual name="aruco_visual">
+        <geometry>
+          <box>
+            <size>0.2 0.001 0.2</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>file://$(find vision_demo)/materials/scripts</uri>
+            <uri>file://$(find vision_demo)/materials/textures</uri>
+            <name>aruco_0</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
