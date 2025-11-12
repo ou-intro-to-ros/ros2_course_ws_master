@@ -1,4 +1,4 @@
-material ArucoMarker2
+material aruco_2
 {
   technique
   {
@@ -7,7 +7,6 @@ material ArucoMarker2
       texture_unit
       {
         texture aruco_2.png
-        filtering trilinear
       }
     }
   }

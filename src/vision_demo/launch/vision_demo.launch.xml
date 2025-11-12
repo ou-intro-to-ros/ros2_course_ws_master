@@ -9,8 +9,8 @@
   <let name="robot_description" value="$(command 'xacro $(var xacro_file)')"/>
   
   <!-- World file argument - can be overridden when launching -->
-  <!-- <arg name="world" default="$(find-pkg-share vision_demo)/worlds/aruco_demo_world.world" /> -->
-  <arg name="world" default="$(find-pkg-share vision_demo)/worlds/aruco_test_world.world" />
+  <arg name="world" default="$(find-pkg-share vision_demo)/worlds/aruco_demo_world.world" />
+  <!-- <arg name="world" default="$(find-pkg-share vision_demo)/worlds/aruco_test_world.world" /> -->
   <!-- <arg name="world" default="$(find-pkg-share vision_demo)/worlds/basic_demo_world.world" /> -->
 
   <arg name="rviz_config" default="$(var pkg_share)/config/turtlebot3_config.rviz"/>
@@ -62,5 +62,10 @@
   </node>
 
   <!-- <executable cmd="bash -c 'echo GAZEBO_MODEL_PATH=$GAZEBO_MODEL_PATH; sleep 5'" output="screen" /> -->
+  <!-- ArUco Detector Node -->
+  <!-- Opens in a separate terminal window to show detection messages -->
+  <node pkg="vision_demo" exec="aruco_detector_node" name="aruco_detector_node" output="screen"
+        launch-prefix="gnome-terminal --title='ArUco Detector Output' --geometry=120x30 -- bash -c 'sleep 6; source /opt/ros/humble/setup.bash; source ~/ros2_course_ws_master/install/setup.bash; ros2 run vision_demo aruco_detector_node --ros-args -p use_sim_time:=true -p show_debug_image:=true -p camera_topic:=/camera/image_raw -p camera_info_topic:=/camera/camera_info; exec bash'">
+  </node>
 
 </launch>
