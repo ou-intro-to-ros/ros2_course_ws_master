@@ -1,0 +1,14 @@
+material pentagon_shape
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture pentagon.png
+        filtering trilinear
+      }
+    }
+  }
+}

@@ -1,0 +1,14 @@
+material triangle_shape
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture triangle.png
+        filtering trilinear
+      }
+    }
+  }
+}

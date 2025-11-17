@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <!-- Simulation time parameter - set to true when using Gazebo -->
+  <arg name="use_sim_time" default="true" />
+  
+  <!-- Package and file paths -->
+  <let name="pkg_share" value="$(find-pkg-share homework4)"/>
+  <let name="xacro_file" value="$(var pkg_share)/urdf/turtlebot3_burger.xacro"/>
+  <let name="robot_description" value="$(command 'xacro $(var xacro_file)')"/>
+  
+  <!-- World file argument - can be overridden when launching -->
+  <arg name="world" default="$(find-pkg-share homework4)/worlds/aruco_shape_detection.world" />
+
+  <arg name="rviz_config" default="$(var pkg_share)/config/turtlebot3_config.rviz"/>
+  
+  <!-- Robot State Publisher -->
+  <!-- Publishes the robot's URDF and transforms between coordinate frames -->
+  <node pkg="robot_state_publisher" exec="robot_state_publisher" output="screen">
+    <param name="robot_description" type="str" value="$(var robot_description)"/>
+    <param name="use_sim_time" value="$(var use_sim_time)" />
+  </node>
+
+  <!-- We set the model and resource path so our gazebo knows where to look -->
+  <set_env name="GAZEBO_RESOURCE_PATH"
+         value="$(var pkg_share):$(env GAZEBO_RESOURCE_PATH)" />
+  
+  <!-- Start Gazebo server (physics simulation) -->
+  <executable cmd="gzserver --verbose $(var world) -s libgazebo_ros_init.so -s libgazebo_ros_factory.so" output="screen" />
+  
+  <!-- Start Gazebo client (visualization GUI) -->
+  <executable cmd="gzclient" output="screen" />
+  
+  <!-- Spawn Robot in Gazebo -->
+  <!-- Waits 5 seconds for Gazebo to fully start before spawning the robot -->
+  <node pkg="gazebo_ros" exec="spawn_entity.py" output="screen"
+        args="-topic robot_description -entity turtle_bot"
+        launch-prefix="bash -c 'sleep 5; $0 $@' ">
+    <param name="use_sim_time" value="$(var use_sim_time)" />
+  </node>
+  
+  <!-- RViz -->
+  <node pkg="rviz2" exec="rviz2" output="screen" args="-d $(var rviz_config)">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+
+
+</launch>
