@@ -1,0 +1,15 @@
+<launch>
+
+  <!-- <arg name="use_sim_time" default="true"/>
+  <arg name="map" default="$(find-pkg-share turtlebot3_navigation2)/map/map.yaml"/> -->
+
+  <include file="$(find-pkg-share turtlebot3_gazebo)/launch/turtlebot3_world.launch.py"/>
+
+  <node pkg="path_planning" exec="initial_pose_publisher" name="initial_pose_publisher"/>
+
+  <!-- <include file="$(find-pkg-share turtlebot3_navigation2)/launch/navigation2.launch.py">
+    <arg name="use_sim_time" value="$(var use_sim_time)"/>
+    <arg name="map" value="$(var map)"/>
+  </include> -->
+
+</launch>
