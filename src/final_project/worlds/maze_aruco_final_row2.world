@@ -1,0 +1,2062 @@
+<?xml version="1.0" ?>
+<sdf version='1.7'>
+  <world name='maze_world'>
+    
+    <!-- Lighting -->
+    <light name='sun' type='directional'>
+      <cast_shadows>1</cast_shadows>
+      <pose>0 0 10 0 -0 0</pose>
+      <diffuse>0.8 0.8 0.8 1</diffuse>
+      <specular>0.2 0.2 0.2 1</specular>
+      <attenuation>
+        <range>1000</range>
+        <constant>0.9</constant>
+        <linear>0.01</linear>
+        <quadratic>0.001</quadratic>
+      </attenuation>
+      <direction>-0.5 0.1 -0.9</direction>
+    </light>
+    
+    <!-- Ground Plane -->
+    <model name='ground_plane'>
+      <static>1</static>
+      <link name='link'>
+        <collision name='collision'>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <surface>
+            <friction>
+              <ode>
+                <mu>100</mu>
+                <mu2>50</mu2>
+              </ode>
+            </friction>
+          </surface>
+        </collision>
+        <visual name='visual'>
+          <cast_shadows>0</cast_shadows>
+          <geometry>
+            <plane>
+              <normal>0 0 1</normal>
+              <size>100 100</size>
+            </plane>
+          </geometry>
+          <material>
+            <ambient>0.7 0.7 0.7 1</ambient>
+            <diffuse>0.7 0.7 0.7 1</diffuse>
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+    <!-- Physics -->
+    <gravity>0 0 -9.8</gravity>
+    <physics type='ode'>
+      <max_step_size>0.001</max_step_size>
+      <real_time_factor>1</real_time_factor>
+      <real_time_update_rate>1000</real_time_update_rate>
+    </physics>
+    
+    <!-- Scene -->
+    <scene>
+      <ambient>0.6 0.6 0.6 1</ambient>
+      <background>0.7 0.7 0.7 1</background>
+      <shadows>1</shadows>
+    </scene>
+    
+    <!-- Complete Maze Structure -->
+    <model name='maze'>
+      <static>1</static>
+      <pose>0 0 0 0 0 0</pose>
+      
+      <!-- ========== ROW 0 (y=0 to y=1) ========== -->
+      
+      <!-- Cell (0,0) - walls: north, south, west -->
+      <link name='r0c0_south'>
+        <pose>0.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c0_north'>
+        <pose>0.5 1 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c0_west'>
+        <pose>0 0.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (0,1) - walls: south, marker on north -->
+      <link name='r0c1_south'>
+        <pose>1.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (0,2) - walls: north, south -->
+      <link name='r0c2_south'>
+        <pose>2.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c2_north'>
+        <pose>2.5 1 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (0,3) - walls: north, south -->
+      <link name='r0c3_south'>
+        <pose>3.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c3_north'>
+        <pose>3.5 1 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (0,4) - walls: north, south -->
+      <link name='r0c4_south'>
+        <pose>4.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c4_north'>
+        <pose>4.5 1 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (0,5) - walls: north, south -->
+      <link name='r0c5_south'>
+        <pose>5.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c5_north'>
+        <pose>5.5 1 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (0,6) - walls: north, south, east, marker on east -->
+      <link name='r0c6_south'>
+        <pose>6.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c6_north'>
+        <pose>6.5 1 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c6_east'>
+        <pose>7 0.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (0,7) - walls: north, south, east, west -->
+      <link name='r0c7_south'>
+        <pose>7.5 0 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c7_east'>
+        <pose>8 0.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r0c7_west'>
+        <pose>7 0.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- ========== ROW 1 (y=1 to y=2) ========== -->
+      <!-- Note: north wall of row 0 = south wall of row 1, already created above -->
+      
+      <!-- Cell (1,0) - walls: east, west, marker on south (which is r2c0_north) -->
+      <link name='r1c0_east'>
+        <pose>1 1.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r1c0_west'>
+        <pose>0 1.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (1,1) - walls: west -->
+      <!-- south wall is shared (r0c1_north) -->
+      <link name='r1c1_west'>
+        <pose>1 1.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r1c1_north'>
+        <pose>1.5 2 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (1,3) - walls: north (new) -->
+      <!-- south wall is shared (r0c3_north) -->
+      <link name='r1c3_north'>
+        <pose>3.5 2 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (1,4) - walls: north (new), east -->
+      <!-- south wall is shared (r0c4_north) -->
+      <link name='r1c4_east'>
+        <pose>5 1.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (1,5) - walls: north (new), west -->
+      <!-- south wall is shared (r0c5_north) -->
+      <link name='r1c5_west'>
+        <pose>5 1.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (1,6) - walls: north (new) -->
+      <!-- south wall is shared (r0c6_north) -->
+      <link name='r1c6_north'>
+        <pose>6.5 2 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (1,7) - walls: east -->
+      <!-- south wall is shared (r0c7_north) -->
+      <link name='r1c7_north'>
+        <pose>7.5 2 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r1c7_east'>
+        <pose>8 1.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- ========== ROW 2 (y=2 to y=3) ========== -->
+      
+      <!-- Cell (2,0) - walls: north (new), west -->
+      <!-- south wall is shared (r1c0 has no south wall) -->
+      <link name='r2c0_north'>
+        <pose>0.5 3 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r2c0_west'>
+        <pose>0 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (2,1) - walls: east -->
+      <!-- south wall is shared (r1c1_north) -->
+      <link name='r2c1_east'>
+        <pose>2 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (2,2) - walls: north (new), west -->
+      <!-- south wall is shared (r1c2 has no north) -->
+      <link name='r2c2_north'>
+        <pose>2.5 3 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r2c2_west'>
+        <pose>2 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (2,3) - walls: east -->
+      <!-- south wall is shared (r1c3_north) -->
+      <link name='r2c3_east'>
+        <pose>4 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (2,4) - walls: east, west -->
+      <!-- south wall is shared (r1c4_north) -->
+      <link name='r2c4_east'>
+        <pose>5 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r2c4_west'>
+        <pose>4 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (2,5) - walls: north (new), west -->
+      <!-- south wall is shared (r1c5 has no north) -->
+      <link name='r2c5_north'>
+        <pose>5.5 3 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r2c5_west'>
+        <pose>5 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (2,6) - walls: north (new) -->
+      <!-- south wall is shared (r1c6_north) -->
+      <link name='r2c6_north'>
+        <pose>6.5 3 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (2,7) - walls: east -->
+      <!-- south wall is shared (r1c7_north) -->
+      <link name='r2c7_east'>
+        <pose>8 2.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- ========== ROW 3 (y=3 to y=4) ========== -->
+      
+      <!-- Cell (3,0) - walls: west -->
+      <!-- south wall is shared (r2c0_north) -->
+      <link name='r3c0_west'>
+        <pose>0 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (3,1) - walls: north (new), east -->
+      <!-- south wall is shared (r2c1 has no north) -->
+      <link name='r3c1_north'>
+        <pose>1.5 4 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r3c1_east'>
+        <pose>2 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (3,2) - walls: west -->
+      <!-- south wall is shared (r2c2_north) -->
+      <link name='r3c2_west'>
+        <pose>2 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (3,3) - walls: north (new), east -->
+      <!-- south wall is shared (r2c3 has no north) -->
+      <link name='r3c3_north'>
+        <pose>3.5 4 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r3c3_east'>
+        <pose>4 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (3,4) - walls: north (new), west -->
+      <!-- south wall is shared (r2c4 has no north wall) -->
+      <link name='r3c4_north'>
+        <pose>4.5 4 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r3c4_west'>
+        <pose>4 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (3,5) - walls: north (new) -->
+      <!-- south wall is shared (r2c5 has no north wall) -->
+      <link name='r3c5_north'>
+        <pose>5.5 4 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (3,6) - walls: east -->
+      <!-- south wall is shared (r2c6_north) -->
+      <link name='r3c6_east'>
+        <pose>7 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (3,7) - walls: east, west -->
+      <!-- south wall is shared (r2c7_north) -->
+      <link name='r3c7_east'>
+        <pose>8 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r3c7_west'>
+        <pose>7 3.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- ========== ROW 4 (y=4 to y=5) ========== -->
+      
+      <!-- Cell (4,0) - walls: west -->
+      <!-- south wall is shared (r3c0_north) -->
+      <link name='r4c0_west'>
+        <pose>0 4.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (4,1) - walls: east -->
+      <!-- south wall is shared (r3c1_north) -->
+      <link name='r4c1_east'>
+        <pose>2 4.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (4,2) - walls: north (new), west -->
+      <!-- south wall is shared (r3c2 has no north) -->
+      <link name='r4c2_north'>
+        <pose>2.5 5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r4c2_west'>
+        <pose>2 4.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (4,3) - walls: north (new) -->
+      <!-- south wall is shared (r3c3 has no north wall) -->
+      <link name='r4c3_north'>
+        <pose>3.5 5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (4,4) - walls: north (new) -->
+      <!-- south wall is shared (r3c4 has no north wall) -->
+      <link name='r4c4_north'>
+        <pose>4.5 5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (4,5) - walls: east -->
+      <!-- south wall is shared (r3c5_north) -->
+      <link name='r4c5_east'>
+        <pose>6 4.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (4,6) - walls: west -->
+      <!-- south wall is shared (r3c6_north) -->
+      <link name='r4c6_west'>
+        <pose>6 4.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (4,7) - walls: north (new), east -->
+      <!-- south wall is shared (r3c7 has no north wall) -->
+      <link name='r4c7_north'>
+        <pose>7.5 5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r4c7_east'>
+        <pose>8 4.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- ========== ROW 5 (y=5 to y=6) ========== -->
+      
+      <!-- Cell (5,0) - walls: east, west -->
+      <!-- south wall is shared (r4c0 has no north wall) -->
+      <link name='r5c0_east'>
+        <pose>1 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r5c0_west'>
+        <pose>0 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (5,1) - walls: north (new), west -->
+      <!-- south wall is shared (r4c1 has no north) -->
+      <link name='r5c1_north'>
+        <pose>1.5 6 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r5c1_west'>
+        <pose>1 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (5,2) - walls: east -->
+      <!-- south wall is shared (r4c2_north) -->
+      <link name='r5c2_east'>
+        <pose>3 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (5,3) - walls: west, marker on west -->
+      <!-- south wall is shared (r4c3_north) -->
+      <link name='r5c3_north'>
+        <pose>3.5 6 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r5c3_west'>
+        <pose>3 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (5,4) - walls: east -->
+      <!-- south wall is shared (r4c4_north) -->
+      <link name='r5c4_east'>
+        <pose>5 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (5,5) - walls: east, west -->
+      <!-- south wall is shared (r4c5_north) -->
+      <link name='r5c5_east'>
+        <pose>6 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r5c5_west'>
+        <pose>5 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (5,6) - walls: west -->
+      <!-- south wall is shared (r4c6 has no north wall) -->
+      <link name='r5c6_west'>
+        <pose>6 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (5,7) - walls: north (new), east -->
+      <!-- south wall is shared (r4c7_north) -->
+      <link name='r5c7_north'>
+        <pose>7.5 6 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r5c7_east'>
+        <pose>8 5.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- ========== ROW 6 (y=6 to y=7) ========== -->
+      
+      <!-- Cell (6,0) - walls: west -->
+      <!-- south wall is shared (r5c0 has no north wall) -->
+      <link name='r6c0_west'>
+        <pose>0 6.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (6,1) - walls: north (new), east -->
+      <!-- south wall is shared (r5c1 has no north wall) -->
+      <link name='r6c1_north'>
+        <pose>1.5 7 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r6c1_east'>
+        <pose>2 6.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (6,2) - walls: north (new), west -->
+      <!-- south wall is shared (r5c2 has no north) -->
+      <link name='r6c2_north'>
+        <pose>2.5 7 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r6c2_west'>
+        <pose>2 6.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (6,3) - walls: none -->
+      <!-- south wall is shared (r5c3_north) -->
+      
+      <!-- Cell (6,4) - walls: north (new) -->
+      <!-- south wall is shared (r5c4 has no north) -->
+      <link name='r6c4_north'>
+        <pose>4.5 7 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (6,5) - walls: north (new) -->
+      <!-- south wall is shared (r5c5 has no north wall) -->
+      <link name='r6c5_north'>
+        <pose>5.5 7 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (6,6) - walls: north (new) -->
+      <!-- south wall is shared (r5c6 has no north wall) -->
+      <link name='r6c6_north'>
+        <pose>6.5 7 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (6,7) - walls: north (new), east -->
+      <!-- south wall is shared (r5c7_north) -->
+      <link name='r6c7_north'>
+        <pose>7.5 7 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r6c7_east'>
+        <pose>8 6.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- ========== ROW 7 (y=7 to y=8) ========== -->
+      
+      <!-- Cell (7,0) - walls: north (new), west, marker on west -->
+      <!-- south wall is shared (r6c0 has no north wall) -->
+      <link name='r7c0_north'>
+        <pose>0.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r7c0_west'>
+        <pose>0 7.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (7,1) - walls: east -->
+      <!-- south wall is shared (r6c1_north) -->
+      <link name='r7c1_north'>
+        <pose>1.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r7c1_east'>
+        <pose>2 7.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (7,2) - walls: north (new), west -->
+      <!-- south wall is shared (r6c2 has no north wall) -->
+      <link name='r7c2_north'>
+        <pose>2.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r7c2_west'>
+        <pose>2 7.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (7,3) - walls: none -->
+      <!-- south wall is shared (r6c3_north) -->
+      <link name='r7c3_north'>
+        <pose>3.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (7,4) - walls: north (new) -->
+      <!-- south wall is shared (r6c4 has no north wall) -->
+      <link name='r7c4_north'>
+        <pose>4.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (7,5) - walls: north (new) -->
+      <!-- south wall is shared (r6c5 has no north wall) -->
+      <link name='r7c5_north'>
+        <pose>5.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (7,6) - walls: north (new) -->
+      <!-- south wall is shared (r6c6_north) -->
+      <link name='r7c6_north'>
+        <pose>6.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <!-- Cell (7,7) - walls: north (new), east -->
+      <!-- south wall is shared (r6c7 has no north wall) -->
+      <link name='r7c7_north'>
+        <pose>7.5 8 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>1.0 0.02 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+      <link name='r7c7_east'>
+        <pose>8 7.5 0.25 0 0 0</pose>
+        <collision name='collision'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+        </collision>
+        <visual name='visual'>
+          <geometry>
+            <box><size>0.02 1.0 0.5</size></box>
+          </geometry>
+          <material>
+            <ambient>0.5 0.5 0.5 1</ambient>
+            <diffuse>0.5 0.5 0.5 1</diffuse>
+          </material>
+        </visual>
+      </link>
+      
+    </model>
+    
+    <!-- ArUco Markers -->
+    
+    <!-- Marker 0 on south wall of cell (0,7) facing north -->
+    <model name='aruco_marker_0'>
+      <static>true</static>
+      <pose>7.5 0.01 0.25 0 0 0</pose>
+      <link name='link'>
+        <visual name='aruco_visual'>
+          <geometry>
+            <box><size>0.2 0.001 0.2</size></box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://materials/scripts</uri>
+              <uri>file://materials/textures</uri>
+              <name>aruco_0</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+    <!-- Marker 1 on east wall of cell (0,6) -->
+    <model name='aruco_marker_1'>
+      <static>true</static>
+      <pose>6.99 0.5 0.25 0 0 1.5708</pose>
+      <link name='link'>
+        <visual name='aruco_visual'>
+          <geometry>
+            <box><size>0.2 0.001 0.2</size></box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://materials/scripts</uri>
+              <uri>file://materials/textures</uri>
+              <name>aruco_1</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+    <!-- Marker 2 on backside (south side) of r0c0_north wall, visible from cell (1,0), facing south -->
+    <model name='aruco_marker_2'>
+      <static>true</static>
+      <pose>0.5 0.99 0.25 0 0 3.14159</pose>
+      <link name='link'>
+        <visual name='aruco_visual'>
+          <geometry>
+            <box><size>0.2 0.001 0.2</size></box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://materials/scripts</uri>
+              <uri>file://materials/textures</uri>
+              <name>aruco_2</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+    <!-- Marker 3 on west wall of cell (5,3) -->
+    <model name='aruco_marker_3'>
+      <static>true</static>
+      <pose>3.01 5.5 0.25 0 0 -1.5708</pose>
+      <link name='link'>
+        <visual name='aruco_visual'>
+          <geometry>
+            <box><size>0.2 0.001 0.2</size></box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://materials/scripts</uri>
+              <uri>file://materials/textures</uri>
+              <name>aruco_3</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+    <!-- Marker 4 on west wall of cell (7,0) -->
+    <model name='aruco_marker_4'>
+      <static>true</static>
+      <pose>0.01 7.5 0.25 0 0 -1.5708</pose>
+      <link name='link'>
+        <visual name='aruco_visual'>
+          <geometry>
+            <box><size>0.2 0.001 0.2</size></box>
+          </geometry>
+          <material>
+            <script>
+              <uri>file://materials/scripts</uri>
+              <uri>file://materials/textures</uri>
+              <name>aruco_4</name>
+            </script>
+          </material>
+        </visual>
+      </link>
+    </model>
+    
+  </world>
+</sdf>
