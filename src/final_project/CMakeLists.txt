@@ -8,6 +8,7 @@ endif()
 # Find dependencies
 find_package(ament_cmake REQUIRED)
 find_package(rclcpp REQUIRED)
+find_package(rclcpp_action REQUIRED)  # Added for action client support
 find_package(std_msgs REQUIRED)
 find_package(sensor_msgs REQUIRED)
 find_package(geometry_msgs REQUIRED)
@@ -20,11 +21,14 @@ find_package(tf2_geometry_msgs REQUIRED)
 find_package(cv_bridge REQUIRED)
 find_package(image_transport REQUIRED)
 find_package(OpenCV REQUIRED)
+find_package(ament_index_cpp REQUIRED)
+find_package(yaml-cpp REQUIRED)
 
 include_directories(include)
 
 set(dependencies
   rclcpp
+  rclcpp_action
   std_msgs
   sensor_msgs
   geometry_msgs
@@ -37,35 +41,26 @@ set(dependencies
   cv_bridge
   image_transport
   OpenCV
+  ament_index_cpp
 )
 
-# ArUco Detector Node
-add_executable(aruco_detector_node src/aruco_detector_node.cpp)
-ament_target_dependencies(aruco_detector_node ${dependencies})
+# Maze Explorer Node (new)
+add_executable(maze_explorer_node src/maze_explorer.cpp)
+ament_target_dependencies(maze_explorer_node ${dependencies})
 
-# Shape Detector Node
-add_executable(shape_detector_node src/shape_detector_node.cpp)
-ament_target_dependencies(shape_detector_node ${dependencies})
+# Maze Explorer Node (new)
+add_executable(map_saver_node src/map_saver_node.cpp)
+ament_target_dependencies(map_saver_node ${dependencies} ament_index_cpp)
 
-# Color Detector Node
-add_executable(color_detector_node src/color_detector_node.cpp)
-ament_target_dependencies(color_detector_node ${dependencies})
-
-# Exploration Manager Node
-add_executable(exploration_manager_node src/exploration_manager_node.cpp)
-ament_target_dependencies(exploration_manager_node ${dependencies})
-
-# Navigation Controller Node
-add_executable(navigation_controller_node src/navigation_controller_node.cpp)
-ament_target_dependencies(navigation_controller_node ${dependencies})
+add_executable(aruco_goal_node src/aruco_goal_node.cpp)
+ament_target_dependencies(aruco_goal_node ${dependencies})
+target_link_libraries(aruco_goal_node yaml-cpp)
 
 # Install targets
 install(TARGETS
-  aruco_detector_node
-  shape_detector_node
-  color_detector_node
-  exploration_manager_node
-  navigation_controller_node
+  maze_explorer_node
+  map_saver_node
+  aruco_goal_node
   DESTINATION lib/${PROJECT_NAME}
 )
 
@@ -76,6 +71,7 @@ install(DIRECTORY
   worlds
   urdf
   materials
+  meshes
   DESTINATION share/${PROJECT_NAME}
 )
 

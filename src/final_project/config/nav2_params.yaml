@@ -74,8 +74,8 @@ controller_server:
     general_goal_checker:
       stateful: True
       plugin: "nav2_controller::SimpleGoalChecker"
-      xy_goal_tolerance: 0.15
-      yaw_goal_tolerance: 0.25
+      xy_goal_tolerance: 0.25
+      yaw_goal_tolerance: 0.5
     
     FollowPath:
       plugin: "dwb_core::DWBLocalPlanner"
@@ -267,3 +267,30 @@ velocity_smoother:
     odom_duration: 0.1
     deadband_velocity: [0.0, 0.0, 0.0]
     velocity_timeout: 1.0
+
+# lifecycle_manager:
+#   ros__parameters:
+#     use_sim_time: True
+#     autostart: True
+#     node_names: ['controller_server', 'planner_server', 'behavior_server', 
+#                  'bt_navigator', 'waypoint_follower', 'velocity_smoother', 
+#                  'smoother_server']  
+
+amcl:
+  ros__parameters:
+    use_sim_time: True
+    alpha1: 0.2
+    alpha2: 0.2
+    alpha3: 0.2
+    alpha4: 0.2
+    alpha5: 0.2
+    base_frame_id: "base_footprint"
+    global_frame_id: "map"
+    odom_frame_id: "odom"
+    min_particles: 500
+    max_particles: 2000
+    initial_pose:
+      x: 0.25
+      y: 0.5
+      z: 0.0
+      yaw: 0.0

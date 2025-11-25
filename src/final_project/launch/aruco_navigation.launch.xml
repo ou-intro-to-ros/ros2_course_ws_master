@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<launch>
+  <let name="pkg_share" value="$(find-pkg-share final_project)"/>
+  <let name="xacro_file" value="$(var pkg_share)/urdf/turtlebot3_burger.xacro"/>
+  <let name="robot_description" value="$(command 'xacro $(var xacro_file)')"/>
+  
+  <arg name="use_sim_time" default="true" />
+  <arg name="world" default="$(var pkg_share)/worlds/maze_aruco_final.world" />
+  <arg name="rviz_config" default="$(var pkg_share)/config/maze_mapping.rviz"/>
+  <arg name="nav2_params" default="$(var pkg_share)/config/nav2_params.yaml"/>
+  <arg name="map_file" default="$(var pkg_share)/maps/explored_maze.yaml"/>
+  <arg name="marker_id" default="0"/>
+  <arg name="spawn_x" default="0.25"/>
+  <arg name="spawn_y" default="0.5"/>
+  <arg name="spawn_z" default="0.0"/>
+  <arg name="spawn_yaw" default="0.0"/>
+  
+  <!-- Robot State Publisher -->
+  <node pkg="robot_state_publisher" exec="robot_state_publisher" output="screen">
+    <param name="robot_description" type="str" value="$(var robot_description)"/>
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+  
+  <!-- Gazebo -->
+  <set_env name="GAZEBO_MODEL_PATH" value="$(var pkg_share)/models:$(env GAZEBO_MODEL_PATH)" />
+  <set_env name="GAZEBO_RESOURCE_PATH" value="$(var pkg_share):$(env GAZEBO_RESOURCE_PATH)" />
+  
+  <executable cmd="gzserver --verbose $(var world) -s libgazebo_ros_init.so -s libgazebo_ros_factory.so" output="screen"/>
+  <executable cmd="gzclient" output="screen"/>
+  
+  <!-- Spawn Robot -->
+  <node pkg="gazebo_ros" exec="spawn_entity.py" output="screen" 
+        args="-topic robot_description -entity turtlebot3_burger -x $(var spawn_x) -y $(var spawn_y) -z $(var spawn_z) -Y $(var spawn_yaw)" 
+        launch-prefix="bash -c 'sleep 5; $0 $@'">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+  
+  <!-- Map Server + AMCL (Localization with saved map) -->
+  <node pkg="nav2_map_server" exec="map_server" name="map_server" output="screen">
+    <param name="yaml_filename" value="$(var map_file)"/>
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+  
+  <node pkg="nav2_amcl" exec="amcl" name="amcl" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var nav2_params)"/>
+  </node>
+  
+  <!-- Nav2 Nodes (individually launched) -->
+  <node pkg="nav2_controller" exec="controller_server" name="controller_server" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var nav2_params)"/>
+  </node>
+
+  <node pkg="nav2_planner" exec="planner_server" name="planner_server" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var nav2_params)"/>
+  </node>
+
+  <node pkg="nav2_bt_navigator" exec="bt_navigator" name="bt_navigator" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param from="$(var nav2_params)"/>
+  </node>
+
+  <node pkg="nav2_lifecycle_manager" exec="lifecycle_manager" name="lifecycle_manager_navigation" output="screen">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="autostart" value="true"/>
+    <param name="node_names" value="['map_server', 'amcl', 'controller_server', 'planner_server', 'bt_navigator']"/>
+  </node>
+  
+  <!-- RViz -->
+  <node pkg="rviz2" exec="rviz2" output="screen" args="-d $(var rviz_config)">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+  </node>
+ 
+  <!-- ArUco Goal Navigator -->
+  <node pkg="final_project" exec="aruco_goal_node" name="aruco_goal_node" output="screen" launch-prefix="bash -c 'sleep 8; $0 $@'">
+    <param name="use_sim_time" value="$(var use_sim_time)"/>
+    <param name="target_marker_id" value="$(var marker_id)"/>
+    <param name="markers_file" value="$(var pkg_share)/maps/aruco_markers.yaml"/>
+    <param name="initial_pose_x" value="$(var spawn_x)"/>
+    <param name="initial_pose_y" value="$(var spawn_y)"/>
+    <param name="initial_pose_yaw" value="$(var spawn_yaw)"/>
+  </node>
+  
+</launch>
