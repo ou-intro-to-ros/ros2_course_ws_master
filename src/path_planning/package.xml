@@ -10,12 +10,10 @@
   <buildtool_depend>ament_cmake</buildtool_depend>
 
   <depend>rclcpp</depend>
+  <depend>std_msgs</depend>
   <depend>geometry_msgs</depend>
 
   <exec_depend>ros2launch</exec_depend>
-  <exec_depend>turtlebot3_gazebo</exec_depend>
-  <exec_depend>turtlebot3_navigation2</exec_depend>
-  <exec_depend>nav2_bringup</exec_depend>
 
   <export>
     <build_type>ament_cmake</build_type>

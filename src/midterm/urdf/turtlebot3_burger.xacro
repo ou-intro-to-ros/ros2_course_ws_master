@@ -159,13 +159,13 @@
     </inertial>
   </link>
 
-  <joint name="${namespace}left_bumper_joint" type="fixed">
+  <joint name="${namespace}bumper_joint" type="fixed">
     <parent link="${namespace}base_link"/>
-    <child link="${namespace}left_bumper_link"/>
-    <origin xyz="0.041 0.036 0.016" rpy="1.5708 0 2.3562"/>  
+    <child link="${namespace}bumper_link"/>
+    <origin xyz="0.041 0 0.016" rpy="1.5708 0 1.5708"/>  
   </joint>
 
-  <link name="${namespace}left_bumper_link">
+  <link name="${namespace}bumper_link">
     <visual>
       <geometry>
         <box size="0.024 0.018 0.015"/>
@@ -175,37 +175,7 @@
       </material>
     </visual>
 
-    <collision name="left_bumper_link_collision">
-      <origin xyz="0 0 0" rpy="0 0 0"/>
-      <geometry>
-        <box size="0.024 0.018 0.015"/>
-      </geometry>
-    </collision>
-
-    <inertial>
-      <origin xyz="0 0 0" />
-      <mass value="0.004" />
-      <inertia ixx="0.000000183" ixy="0.0" ixz="0.0" iyy="0.000000267" iyz="0.0" izz="0.0000003" />
-    </inertial>
-  </link>
-
-  <joint name="${namespace}right_bumper_joint" type="fixed">
-    <parent link="${namespace}base_link"/>
-    <child link="${namespace}right_bumper_link"/>
-    <origin xyz="0.041 -0.036 0.016" rpy="-1.5708 0 0.7854"/>  
-  </joint>
-
-  <link name="${namespace}right_bumper_link">
-    <visual>
-      <geometry>
-        <box size="0.024 0.018 0.015"/>
-      </geometry>
-      <material name="sensor_red">
-        <color rgba="0.8 0.1 0.1 1"/>
-      </material>
-    </visual>
-
-    <collision name="right_bumper_link_collision">
+    <collision name="bumper_link_collision">
       <origin xyz="0 0 0" rpy="0 0 0"/>
       <geometry>
         <box size="0.024 0.018 0.015"/>
@@ -342,28 +312,15 @@
     </sensor>
   </gazebo>
 
-  <gazebo reference="${namespace}left_bumper_link">
+  <gazebo reference="${namespace}bumper_link">
     <material>Gazebo/Black</material>
-    <sensor type="contact" name="left_bumper_sensor">
+    <sensor type="contact" name="bumper_sensor">
       <update_rate>10</update_rate>
       <contact>
-        <collision>base_footprint_fixed_joint_lump__left_bumper_link_collision_collision_2</collision>
+        <collision>base_footprint_fixed_joint_lump__bumper_link_collision_collision_1</collision>
       </contact>
-      <plugin name="gazebo_ros_bumper_controller_left" filename="libgazebo_ros_bumper.so">
-        <frame_name>${namespace}left_bumper_link</frame_name>
-      </plugin>
-    </sensor>
-  </gazebo>
-
-  <gazebo reference="${namespace}right_bumper_link">
-    <material>Gazebo/Black</material>
-    <sensor type="contact" name="right_bumper_sensor">
-      <update_rate>10</update_rate>
-      <contact>
-        <collision>base_footprint_fixed_joint_lump__right_bumper_link_collision_collision_3</collision>
-      </contact>
-      <plugin name="gazebo_ros_bumper_controller_right" filename="libgazebo_ros_bumper.so">
-        <frame_name>${namespace}right_bumper_link</frame_name>
+      <plugin name="gazebo_ros_bumper_controller" filename="libgazebo_ros_bumper.so">
+        <frame_name>${namespace}bumper_link</frame_name>
       </plugin>
     </sensor>
   </gazebo>
