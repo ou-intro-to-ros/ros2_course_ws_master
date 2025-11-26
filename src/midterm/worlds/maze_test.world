@@ -31,8 +31,11 @@
           <surface>
             <friction>
               <ode>
-                <mu>100</mu>
-                <mu2>50</mu2>
+                <mu>1</mu>
+                <mu2>1</mu2>
+                <fdir1>0 0 0</fdir1>
+                <slip1>0</slip1>
+                <slip2>0</slip2>
               </ode>
               <torsional>
                 <ode/>
@@ -6540,13 +6543,13 @@
       </link>
       <static>1</static>
       <allow_auto_disable>1</allow_auto_disable>
-      <pose>0.194493 0.303742 0 0 -0 0</pose>
+      <pose>0.127074 0.304149 0 0 -0 0</pose>
     </model>
     <state world_name='default'>
-      <sim_time>50 216000000</sim_time>
-      <real_time>50 880492870</real_time>
-      <wall_time>1761964238 9259582</wall_time>
-      <iterations>50216</iterations>
+      <sim_time>120 633000000</sim_time>
+      <real_time>121 443896000</real_time>
+      <wall_time>1762204321 34941115</wall_time>
+      <iterations>120633</iterations>
       <model name='ground_plane'>
         <pose>0 0 0 0 -0 0</pose>
         <scale>1 1 1</scale>
@@ -6927,7 +6930,7 @@
           <wrench>0 0 0 0 -0 0</wrench>
         </link>
         <link name='metal_plate_3_3_c::main'>
-          <pose>3 3 0 0 0 -1.5708</pose>
+          <pose>2 3 0 0 -0 0</pose>
           <velocity>0 0 0 0 -0 0</velocity>
           <acceleration>0 0 0 0 -0 0</acceleration>
           <wrench>0 0 0 0 -0 0</wrench>
@@ -7071,7 +7074,7 @@
     </state>
     <gui fullscreen='0'>
       <camera name='user_camera'>
-        <pose>-0.97357 2.04117 7.24145 0 1.19164 0.78501</pose>
+        <pose>5.94868 0.834453 11.1923 0 1.28764 2.48019</pose>
         <view_controller>orbit</view_controller>
         <projection_type>perspective</projection_type>
       </camera>

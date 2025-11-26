@@ -8,7 +8,7 @@
   
   <!-- Package and file paths -->
   <arg name="use_sim_time" default="true" />
-  <arg name="world" default="$(var pkg_share)/worlds/maze_midterm.world" />
+  <arg name="world" default="$(var pkg_share)/worlds/maze_test.world" />
   <arg name="rviz_config" default="$(var pkg_share)/config/turtlebot3_config.rviz"/>
   
   <!-- Robot State Publisher -->
@@ -43,4 +43,5 @@
   <node pkg="midterm" exec="midterm_node" name="midterm_node" output="screen" launch-prefix="bash -c 'sleep 10; $0 $@'">
     <param name="use_sim_time" value="$(var use_sim_time)"/>
   </node>
+
 </launch>

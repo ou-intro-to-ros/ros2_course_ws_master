@@ -11,16 +11,15 @@ public:
 
 private:
   void on_contacts(const gazebo_msgs::msg::ContactsState::SharedPtr msg);
+  void check_side_timer_callback();
 
   rclcpp::Subscription<gazebo_msgs::msg::ContactsState>::SharedPtr contacts_sub_;
   rclcpp::Publisher<geometry_msgs::msg::Twist>::SharedPtr cmd_vel_pub_;
+  rclcpp::TimerBase::SharedPtr side_timer_;
   geometry_msgs::msg::Twist cmd_vel_msg_;
   bool bumper_pressed_;
   bool going_backward_;
-  bool turning_left_;
-  bool turning_right_;
-  int turns_;
-  int direction_;
+  bool going_sideways_;
   float linear_speed_;
   float angular_speed_;
 };
